@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `price` DECIMAL(10, 2) NOT NULL,
   `description` TEXT,
   `image` VARCHAR(255),
-  `owner` VARCHAR(255),
+  `owner` VARCHAR(255)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 CREATE TABLE IF NOT EXISTS `users` (
