@@ -96,10 +96,4 @@ jobs:
           tags: "${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}"
 
         
-      - name: Build the Frontend Image
-        uses: docker/build-push-action@v5.0.0
-        with:
-          context: ./frontend
-          file: ./frontend/Dockerfile
-          push: false
-          tags: "${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}"
+      
