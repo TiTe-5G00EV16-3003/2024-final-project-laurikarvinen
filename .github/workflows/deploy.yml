@@ -94,21 +94,21 @@ jobs:
 
       - name: Create and Sync Container configurations
         run: |
-          mkdir -p project_stack
-          cp docker-compose.server.yml project_stack/docker-compose.yml
-          mkdir -p project_stack/db
-          cp db/init.prod.sql project_stack/db/
-          echo "${{secrets.ENV_FILE_PROD}}" > project_stack/.env
-          echo "BACKEND_IMAGE=${{env.REGISTRY}}/${{env.BACKEND_IMAGE_NAME}}" >> project_stack/.env
-          echo "FRONTEND_IMAGE=${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}" >> project_stack/.env
-          rsync -r project_stack "${{secrets.REMOTE_USER}}@${{secrets.REMOTE_SERVER}}:./"
+          mkdir -p finalproject_stack
+          cp docker-compose.server.yml finalproject_stack/docker-compose.yml
+          mkdir -p finalproject_stack/db
+          cp db/init.prod.sql finalproject_stack/db/
+          echo "${{secrets.ENV_FILE_PROD}}" > finalproject_stack/.env
+          echo "BACKEND_IMAGE=${{env.REGISTRY}}/${{env.BACKEND_IMAGE_NAME}}" >> finalproject_stack/.env
+          echo "FRONTEND_IMAGE=${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}" >> finalproject_stack/.env
+          rsync -r finalproject_stack "${{secrets.REMOTE_USER}}@${{secrets.REMOTE_SERVER}}:./"
 
       - name: Start the containers via SSh
         run:
           ssh ${{secrets.REMOTE_USER}}@${{secrets.REMOTE_SERVER}}
           "
           docker login ${{env.REGISTRY}} -u ${{github.actor}} -p ${{secrets.GITHUB_TOKEN}};
-          cd project_stack;
+          cd finalproject_stack;
           docker-compose pull;
           docker-compose up -d;
           "
