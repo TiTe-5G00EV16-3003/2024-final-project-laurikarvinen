@@ -16,7 +16,7 @@ app.use(cors({
       'http://172.16.5.126'
     ]
   }));
-app.get('/health', (req, res) => {
+app.get('/check', (req, res) => {
     res.send("ok")
 })
 
