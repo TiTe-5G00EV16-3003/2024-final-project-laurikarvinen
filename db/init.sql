@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `items` (
   `description` TEXT,
   `image` VARCHAR(255),
   `owner` VARCHAR(255),
-);
+) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` VARCHAR(36) NOT NULL,
