@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 
 import AddItem from './items/pages/AddItem';
 import Items from './items/pages/Items';
@@ -70,7 +70,7 @@ function App() {
   let routes;
   if (token) {
     routes = (
-      <Switch>
+      <Routes>
         <Route path="/" exact>
           <Items />
         </Route>
@@ -80,20 +80,20 @@ function App() {
         <Route path="/users" exact>
           <Users />
         </Route>
-        <Redirect to="/" />
-      </Switch>
+        <Navigate to="/" />
+      </Routes>
     );
   } else {
     routes = (
-      <Switch>
+      <Routes>
         <Route path="/" exact>
           <Items />
         </Route>
         <Route path="/auth">
           <Authenticate />
         </Route>
-        <Redirect to="/" />
-      </Switch>
+        <Navigate to="/" />
+      </Routes>
     );
   }
 

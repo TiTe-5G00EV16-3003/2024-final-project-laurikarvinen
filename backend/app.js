@@ -7,15 +7,10 @@ const cors = require('cors');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+
 app.use(express.static('public'))
-app.use(cors({
-    origin: [
-      'http://localhost:5173',
-      'http://localhost:8088',
-      'http://172.16.5.126:8080',
-      'http://172.16.5.126'
-    ]
-  }));
+
 app.get('/check', (req, res) => {
     res.send("ok")
 })

@@ -17,7 +17,7 @@ const Item = props => {
   const showConfirmationHandler = () => setShowConfirmationModal(true);
   const cancelConfirmationHandler = () => setShowConfirmationModal(false);
 
-  const deleteCityMutation = useMutation({
+  const deleteItemMutation = useMutation({
     mutationFn: deleteItem,
     onSuccess: (data) => {
       console.log(data);
@@ -29,7 +29,7 @@ const Item = props => {
 
   const deleteConfirmedHandler = () => {
     setShowConfirmationModal(false);
-    deleteCityMutation.mutate({
+    deleteItemMutation.mutate({
       id: props.id,
       token: auth.token
     })
@@ -74,5 +74,6 @@ const Item = props => {
     </>
   )
 }
+
 
 export default Item;
