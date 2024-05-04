@@ -3,8 +3,12 @@ const items = require('../models/items');
 
 const itemSchema = Joi.object({
     name: Joi.string().required().min(1),
+    description: Joi.string().min(1),  // Varmista, että tämä rivi on skeemassa
     price: Joi.string().required().min(1),
+    image: Joi.string().min(1),
+    owner: Joi.string().min(1)
 });
+
 const itemInsertSchema = Joi.object({
     name: Joi.string().required().min(1),
     price: Joi.string().required().min(1),
@@ -122,6 +126,7 @@ const deleteItem = async (req, res) => {
     try {
         const id = parseInt(req.params.id, 10);
         const existingItem = await items.findItemById(id);
+        
 
         if (existingItem.length === 0) {
             res.status(404).json({ message: "Item not found" });

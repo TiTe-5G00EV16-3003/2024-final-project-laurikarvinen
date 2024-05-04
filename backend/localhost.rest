@@ -6,7 +6,7 @@ Content-Type: application/json
 Authorization: BEARER {{authToken}}
 
 {
-    "name": "easdddasasdsa",
+    "name": "easdddasdddfssfsdasdsa",
     "price": "2"
 }
 

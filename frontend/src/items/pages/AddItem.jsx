@@ -8,44 +8,45 @@ import { addItem } from "../api/items";
 import './AddItem.css';
 
 const AddItem = () => {
-
+  const history = useHistory();
   const nameRef = useRef();
   const priceRef = useRef();
   const imageRef = useRef();
   const descriptionRef = useRef();
   const ownerRef = useRef();
   const auth = useContext(AuthContext);
-  const history = useHistory();
-  const createCityMutation = useMutation({
-    mutationFn: addItem
+  const createItemMutation = useMutation(addItem, {
+    onSuccess: () => {
+      history.push('/');
+    },
+    onError: (error) => {
+      // Handle error state, e.g., show an alert or set error message in state
+      alert("Error adding item: " + error.message);
+    }
   });
-
   const itemSubmitHandler = async (event) => {
     event.preventDefault();
-    createCityMutation.mutate({
+    createItemMutation.mutate({
       name: nameRef.current.value,
       description: descriptionRef.current.value,
       owner: ownerRef.current.value,
       price: priceRef.current.value,
       image: imageRef.current.value,
       token: auth.token
-    })
-    history.push('/');
+    });
   };
-
-
+ 
   return (
-    <form className="item-form" onSubmit={itemSubmitHandler}>
-      <Input ref={nameRef} type="text" label="Item Name" />
-      <Input ref={descriptionRef} type="text" label="Description" />
-      <Input ref={ownerRef} type="text" label="Owner" />
-      <Input ref={priceRef} type="text" label="Price" />
-      <Input ref={imageRef} type="text" label="Image Link" />
-      <Button type="submit">
+<form className="item-form" onSubmit={itemSubmitHandler}>
+<Input ref={nameRef} type="text" label="Item Name" />
+<Input ref={descriptionRef} type="text" label="Description" />
+<Input ref={ownerRef} type="text" label="Owner" />
+<Input ref={priceRef} type="text" label="Price" />
+<Input ref={imageRef} type="text" label="Image Link" />
+<Button type="submit" disabled={createItemMutation.isLoading}>
         Add item
-      </Button>
-
-    </form>
+</Button>
+</form>
   )
 }
 

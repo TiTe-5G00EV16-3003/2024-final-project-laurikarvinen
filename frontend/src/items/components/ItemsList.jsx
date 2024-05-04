@@ -4,17 +4,16 @@ import './ItemsList.css';
 const ItemsList = props => {
   return (
     <ul className="items-list">
-      {props.items.map((items) =>
+      {props.items.map((item) => 
         <Item
-          key={items.id}
-          name={items.name}
-          description={items.description}
-          owner={items.owner}
-          price={items.price}
-          image={items.image}
+          key={item.id}
+          id={item.id} 
+          name={item.name}
+          description={item.description}
+          owner={item.owner}
+          price={item.price}
+          image={item.image}
         />
-
-        
       )}
     </ul>
   )
