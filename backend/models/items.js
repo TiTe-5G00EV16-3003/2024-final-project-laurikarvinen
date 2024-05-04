@@ -58,9 +58,18 @@ const items = {
             throw new Error(error);
         }
     },
-    searchItemsByName: async(name)  => {
-        
-    }
+    findByItem: async(item) => {
+        try {
+            const connection = await pool.getConnection();
+            const [results] = await connection.query(
+            'SELECT * FROM `items` WHERE name=? AND price=?', [item.name, item.price]
+        );
+            connection.release();
+            return results;
+        } catch (error) {
+        throw new Error(error);
+        }
+    },
 };
 
 module.exports = items;
