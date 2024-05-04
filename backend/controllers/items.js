@@ -41,7 +41,7 @@ const getItemById = async (req, res) => {
         }
 
     } catch (error) {
-        res.status(500).json({ message: "something went wrong" });
+        res.status(500).json({ message: "Something went wrong" });
     }
 };
 
@@ -61,7 +61,7 @@ const createItem = async (req, res) => {
             image: req.body.image
         };
 
-        const check = await items.searchItemsByName(item.name);
+        const check = await items.findByItem(item);
         if (check.length === 1) {
             res.status(400).json({ message: "Entry exists" });
             return;
@@ -78,7 +78,7 @@ const createItem = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "something went wrong" });
+        res.status(500).json({ message: "Something went wrong" });
     }
 };
 
