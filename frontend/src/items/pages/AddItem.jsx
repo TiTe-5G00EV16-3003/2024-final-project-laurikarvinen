@@ -1,6 +1,6 @@
 import { useContext, useRef } from "react";
 import { useMutation } from "react-query";
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from "../../shared/components/Button";
 import Input from "../../shared/components/Input";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -8,7 +8,7 @@ import { addItem } from "../api/items";
 import './AddItem.css';
 
 const AddItem = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const nameRef = useRef();
   const priceRef = useRef();
   const imageRef = useRef();
@@ -17,7 +17,7 @@ const AddItem = () => {
   const auth = useContext(AuthContext);
   const createItemMutation = useMutation(addItem, {
     onSuccess: () => {
-      history.push('/');
+      navigate('/');
     },
     onError: (error) => {
       // Handle error state, e.g., show an alert or set error message in state
