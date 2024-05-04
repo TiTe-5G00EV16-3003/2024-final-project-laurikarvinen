@@ -20,7 +20,6 @@ const AddItem = () => {
       navigate('/');
     },
     onError: (error) => {
-      // Handle error state, e.g., show an alert or set error message in state
       alert("Error adding item: " + error.message);
     }
   });
