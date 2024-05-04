@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/', getItems);
 router.get('/:id', getItemById);
-//router.use(verifyToken);
+router.use(verifyToken);
 router.post('/', createItem);
 router.put('/:id', updateItem);
 router.delete('/:id', deleteItem)
