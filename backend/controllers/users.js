@@ -14,6 +14,7 @@ const signupSchema = Joi.object({
 const signUpUser = async (req, res) => {
   const { error } = signupSchema.validate(req.body);
   if (error) {
+    console.error("Validation Error:", error.details[0].message);
     res.status(400).json({ message: error.details[0].message });
     return;
   }
@@ -26,6 +27,7 @@ const signUpUser = async (req, res) => {
       return res.status(422).json({ message: "Could not create user, user exists" });
     } 
   } catch (error) {
+    console.error("Error finding user by email:", error);
     return res.status(500).json({ message: "Something went wrong" });
   }
   
@@ -66,6 +68,7 @@ const signUpUser = async (req, res) => {
       }
     );
   } catch (error) {
+    console.error("Error creating user:", error);
     res.status(500).json({message: "Signup failed, please try again!"});
   }
 };
