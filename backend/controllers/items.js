@@ -9,11 +9,6 @@ const itemSchema = Joi.object({
     owner: Joi.string().optional()
 });
 
-const itemInsertSchema = Joi.object({
-    name: Joi.string().required().min(1),
-    price: Joi.string().required().min(1),
-    image: Joi.string().min(1)
-})
 
 const itemUpdateSchema = Joi.object({
     id: Joi.number().required(),

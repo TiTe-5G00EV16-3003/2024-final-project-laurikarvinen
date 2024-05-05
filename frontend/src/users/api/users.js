@@ -1,5 +1,5 @@
 export const signUpUser = async ({name, email, password}) => {
-  const response = await fetch(`http://localhost:5000/api/users/signup`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export const signUpUser = async ({name, email, password}) => {
 }
 
 export const loginUser = async ({ email, password }) => {
-  const response = await fetch(`http://localhost:5000/api/users/login`, {
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
