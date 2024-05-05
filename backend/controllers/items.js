@@ -3,10 +3,10 @@ const items = require('../models/items');
 
 const itemSchema = Joi.object({
     name: Joi.string().required().min(1),
-    description: Joi.string().min(1),  // Varmista, että tämä rivi on skeemassa
+    description: Joi.string().min(1),  
     price: Joi.string().required().min(1),
-    image: Joi.string().min(1),
-    owner: Joi.string().min(1)
+    image: Joi.string().optional(),
+    owner: Joi.string().optional()
 });
 
 const itemInsertSchema = Joi.object({
@@ -16,11 +16,13 @@ const itemInsertSchema = Joi.object({
 })
 
 const itemUpdateSchema = Joi.object({
-    id: Joi.number().required().integer(),
-    name: Joi.string().required().min(1),
-    price: Joi.string().required().min(1),
-    image: Joi.string().min(1)
-})
+    id: Joi.number().required(),
+    name: Joi.string().required(),
+    price: Joi.number().required(),
+    image: Joi.string().required(),
+    description: Joi.string().optional(),
+    owner: Joi.string().optional()
+});
 
 const getItems = async (req, res) => {
     try {
@@ -61,6 +63,8 @@ const createItem = async (req, res) => {
 
         const item = {
             name: req.body.name,
+            description: req.body.description,
+            owner: req.body.owner,
             price: req.body.price,
             image: req.body.image
         };
@@ -88,6 +92,7 @@ const createItem = async (req, res) => {
 
 
 const updateItem = async (req, res) => {
+    console.log('Received data:', req.body);
     try {
         const { error } = itemUpdateSchema.validate(req.body);
         if (error) {
@@ -95,21 +100,24 @@ const updateItem = async (req, res) => {
             return;
         }
 
-        const item = {
-            id: req.body.id,
-            name: req.body.name,
-            price: req.body.price,
-            image: req.body.image
-        };
+        const { id, name, price, image, owner, description } = req.body;
 
+        const check = await items.findItemById(id);
+        if (check.length === 0) {
+            res.status(404).json({ message: "Item not found"});
+            return;
+        }
 
+        const updatedFields = { name, price, image };
 
-        const check = await items.findItemById(item.id);
-            if (check.length === 0) {
-        res.status(404).json({ message: "Item not found"});
-    }
+        if (owner) {
+            updatedFields.owner = owner;
+        }
+        if (description) {
+            updatedFields.description = description;
+        }
 
-        const response = await items.updateItem(id, item);
+        const response = await items.updateItem(id, updatedFields);
         if (response.affectedRows === 1) {
             const updatedItem = await items.findItemById(id);
             res.json(updatedItem[0]);
@@ -121,6 +129,7 @@ const updateItem = async (req, res) => {
         res.status(500).json({ message: "something went wrong" });
     }
 };
+
 
 const deleteItem = async (req, res) => {
     try {

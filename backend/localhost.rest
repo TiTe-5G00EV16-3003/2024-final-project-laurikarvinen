@@ -16,9 +16,11 @@ Content-Type: application/json
 Authorization: BEARER {{authToken}}
 
 {
-    "name": "e",
-    "price": "2.50"
+  "id": 2,
+  "name": "e",
+  "price": "2.50",
 }
+
 
 ###
 DELETE http://localhost:5000/api/items/2
