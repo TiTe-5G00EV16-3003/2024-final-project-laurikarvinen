@@ -2,7 +2,11 @@
 # Final Project
 Web Programming - Final Project
 
+## vm:
+Yhdistä titeverkkoon ja mene osoitteeseen:
+http://172.16.5.126/
 
+## Lokaalisti:
 ## Backend
 
 ### Asennus
