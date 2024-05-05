@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS `items` (
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
-INSERT INTO items (`id`, `name`, `price`, `description`, `image`) VALUES
-  (1, 'Example', '8.99', 'Example', 'Example');
+INSERT INTO items (`id`, `name`, `price`, `description`, `image`, `owner`) VALUES
+  (1, 'Example', '8.99', 'Example', 'Example', 'Example');
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` VARCHAR(36) NOT NULL,
