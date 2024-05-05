@@ -8,7 +8,7 @@ export const getItems = async () => {
 
 export const addItem = async ({name, description, owner, price, image, token}) => {
   console.log("Sending data:", {name, description, owner, price, image});
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/items`, {
+  const response = await fetch(`http://localhost:5000/api/items`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export const addItem = async ({name, description, owner, price, image, token}) =
 };
 
 export const deleteItem = async({id, token}) => {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/api/items/${id}`
+  const response = await fetch(`http://localhost:5000/api/items/${id}`
   , {
     method: 'DELETE',
     headers: {
@@ -46,7 +46,7 @@ export const updateItem = async ({item, token}) => {
   console.log('Updating item with id:', item.id); 
   try {
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/items/${item.id}`, {
+    const response = await fetch(`http://localhost:5000/api/items/${item.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
