@@ -15,7 +15,7 @@ services:
       - .env
     restart: always
   db:
-    image: mysql:8.0.28
+    image: mysql
     command: --default-authentication-plugin=caching_sha2_password
     restart: always
     environment:
