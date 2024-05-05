@@ -42,10 +42,9 @@ VITE_API_URL=http://172.16.5.126:5000
 npm start
 ```
 
-### Konttien käynnistys
+## Konttien käynnistys
 
-1. Avaa backend-kansio terminaalissa.
-2. Käynnistä backend-kontti Dockerissa seuraavalla komennolla:
+Suorita seuraava komento juurihakemistossa:
 
 ```bash
 docker-compose up -d --build
@@ -78,14 +77,5 @@ VITE_API_URL=http://localhost:5000
 
 ```bash
 npm start
-```
-
-### Konttien käynnistys
-
-1. Avaa frontend-kansio terminaalissa.
-2. Käynnistä frontend-kontti Dockerissa seuraavalla komennolla:
-
-```bash
-docker-compose up -d --build
 ```
 
