@@ -42,4 +42,28 @@ export const deleteItem = async({id, token}) => {
   return await response.json();
 };
 
+export const updateItem = async ({item, token}) => {
+  console.log('Updating item with id:', item.id); 
+  try {
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/items/${item.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify(item)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Failed to update item:', errorData);
+      throw new Error('Failed to update item');
+    }
+    return await response.json(); 
+  } catch (error) {
+    console.error('Update failed:', error);
+    throw error;
+  }
+};
 

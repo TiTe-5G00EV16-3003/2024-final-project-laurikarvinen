@@ -23,20 +23,10 @@ function App() {
   const login = useCallback((uid, token, expiration) => {
     setToken(token);
     setUserId(uid);
-
-    const tokenExpirationDate = 
-      expiration || (new Date(new Date().getTime() + 60 * 60 * 1000));
-    
+    const tokenExpirationDate = expiration || new Date(new Date().getTime() + 60 * 60 * 1000);
     setTokenExpirationDate(tokenExpirationDate);
     
-    localStorage.setItem(
-      'userData',
-      JSON.stringify({ 
-        userId: uid, 
-        token,
-        expiration: tokenExpirationDate.toISOString()
-      })
-    );
+    localStorage.setItem('userData', JSON.stringify({ userId: uid, token, expiration: tokenExpirationDate.toISOString() }));
   }, []);
 
   const logout = useCallback(() => {
@@ -48,65 +38,42 @@ function App() {
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'));
-    
-    if (storedData && storedData.token && 
-          new Date(storedData.expiration) > new Date()) {
-      
-            login(storedData.userId, storedData.token, new Date(storedData.expiration));
+    if (storedData && storedData.token && new Date(storedData.expiration) > new Date()) {
+      login(storedData.userId, storedData.token, new Date(storedData.expiration));
     }
-
   }, [login]);
 
   useEffect(() => {
-    if(token && tokenExpirationDate) {
+    if (token && tokenExpirationDate) {
       const remainingTime = tokenExpirationDate.getTime() - new Date().getTime();
       logoutTimer = setTimeout(logout, remainingTime);
     } else {
       clearTimeout(logoutTimer);
     }
-  },[token, tokenExpirationDate, logout]);
-
+  }, [token, tokenExpirationDate, logout]);
 
   let routes;
   if (token) {
     routes = (
       <Routes>
-        <Route path="/" exact>
-          <Items />
-        </Route>
-        <Route path="/items/new" exact>
-          <AddItem />
-        </Route>
-        <Route path="/users" exact>
-          <Users />
-        </Route>
-        <Navigate to="/" />
+        <Route path="/" element={<Items />} />
+        <Route path="/items/new" element={<AddItem />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     );
   } else {
     routes = (
       <Routes>
-        <Route path="/" exact>
-          <Items />
-        </Route>
-        <Route path="/auth">
-          <Authenticate />
-        </Route>
-        <Navigate to="/" />
+        <Route path="/" element={<Items />} />
+        <Route path="/auth" element={<Authenticate />} />
+        <Route path="*" element={<Navigate to="/auth" replace />} />
       </Routes>
     );
   }
 
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: !!token,
-        token: token,
-        userId: userId,
-        login: login,
-        logout: logout
-      }}
-    >
+    <AuthContext.Provider value={{ isLoggedIn: !!token, token, userId, login, logout }}>
       <QueryClientProvider client={queryClient}>
         <Router>
           <MainNavigation />
@@ -116,7 +83,8 @@ function App() {
         </Router>
       </QueryClientProvider>
     </AuthContext.Provider>
-  )
+  );
 }
 
-export default App
+export default App;
+
